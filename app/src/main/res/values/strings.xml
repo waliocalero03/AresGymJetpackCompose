@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AresGymJetpackCompose</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_logging">LoggingActivity</string>
 </resources>
