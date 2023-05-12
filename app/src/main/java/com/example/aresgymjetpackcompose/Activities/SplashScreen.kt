@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.aresgymjetpackcompose.R
+import com.example.aresgymjetpackcompose.StartBackground
 import com.example.aresgymjetpackcompose.theme.Theme
 
 class MainActivity : ComponentActivity() {
@@ -58,9 +59,7 @@ fun pantallaInicial(context : Context? = null){
 
             val (btnIniciarSession, btnRegistrarse, column) = createRefs()
 
-            Image(painter = painterResource(id = R.drawable.imgprincipal3), contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds)
+            StartBackground()
 
             Column(modifier = Modifier.constrainAs(column){
                 top.linkTo(parent.top)
@@ -139,6 +138,6 @@ fun openRegisterActivity(context: Context){
 }
 
 fun openSignUpActivity(context: Context){
-    val intent = Intent(context, LoggingActivity::class.java)
-    context.startActivity(intent)
+    /*val intent = Intent(context, LoggingActivity::class.java)
+    context.startActivity(intent)*/
 }
