@@ -2,4 +2,33 @@
     <string name="app_name">AresGymJetpackCompose</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_logging">LoggingActivity</string>
+    <string name="fullName">Nom cognoms</string>
+    <string name="username">Nom d\'usuari</string>
+    <string name="mail">Correu electrònic</string>
+    <string name="password">Contrasenya</string>
+    <string name="confirmPassword">Confirmar contrasenya</string>
+    <string name="weight">Pes</string>
+    <string name="age">Edat</string>
+    <string name="coachCode">Codi Entrenador</string>
+    <string name="register">Registrar-se</string>
+    <string name="coach">Entrenador</string>
+    <string name="login">Iniciar sessió</string>
+    <string name="emptyValues">No pots tenir camps en blanc</string>
+    <string name="fullNameIncorrectValue">El nom i cognoms només pot contenir lletres i espais (4 com a màxim)</string>
+    <string name="userNameIncorrectValue">El nom d\'usuari pot contenir lletres, números, punt i barra baixa</string>
+    <string name="emailIncorrectValue">El format del correu electrònic és incorrecte</string>
+    <string name="weightIncorrectValue">Incorrecte valor de pes</string>
+    <string name="ageIncorrectValue">Incorrecte valor d\'edat</string>
+    <string name="passwordIncorrectValue">La contrasenya ha de contenir un número, una majúscula, una miníscula i un caracter especial. Com a mínim, ha de tenir 8 caràcters i màxim 16 caràcters.</string>
+    <string name="passwordsDifferents">Les contrasenyes no són iguals.</string>
+    <string-array name="registerArray">
+        <item>@string/fullName</item>
+        <item>@string/username</item>
+        <item>@string/mail</item>
+        <item>@string/weight</item>
+        <item>@string/age</item>
+        <item>@string/password</item>
+        <item>@string/confirmPassword</item>
+        <item>@string/coachCode</item>
+    </string-array>
 </resources>

@@ -28,9 +28,11 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.aresgymjetpackcompose.R
 import com.example.aresgymjetpackcompose.StartBackground
+import com.example.aresgymjetpackcompose.btnBlue
 import com.example.aresgymjetpackcompose.theme.Theme
 
 class MainActivity : ComponentActivity() {
@@ -86,20 +88,10 @@ fun pantallaInicial(context : Context? = null){
 
             }
 
-            Button(onClick = { openRegisterActivity(context!!) },
-                modifier = Modifier
-                    .constrainAs(btnRegistrarse) {
-                        bottom.linkTo(parent.bottom, margin = 16.dp)
-                    }
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                 containerColor = colorResource(id = R.color.blue)
-                )
-            ){
-                textButton(text = "Registrar-se")
-            }
+            btnBlue(title = "Registrar-se", onClick = { openRegisterActivity(context!!) },
+                modifier = Modifier.constrainAs(btnRegistrarse){
+                    bottom.linkTo(parent.bottom, 16.dp)
+                })
 
             Button(onClick = { openSignUpActivity(context!!) },
                 modifier = Modifier

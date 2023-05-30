@@ -70,4 +70,19 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha08"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // Okhttp3 for the POST requests
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+
+    // Gson (To convert raw JSON to pretty JSON)
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+
 }
