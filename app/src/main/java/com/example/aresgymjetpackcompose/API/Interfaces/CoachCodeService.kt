@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 
-private const val globalURL = "aresgym/coachcode"
+private const val globalURL = "coachcode"
 
 interface CoachCodeService {
 

@@ -36,18 +36,25 @@ class Comprobations(private val message: Message) {
 
     fun checkFullName(fullName : String) : Boolean{
 
-        val pattern = Regex("^[A-Za-z ]{1,4}$")
-        return check(pattern, fullName, R.string.fullNameIncorrectValue)
+        val pattern = Regex("[A-Za-z ]+")
+        val check =  check(pattern, fullName, R.string.fullNameIncorrectValue)
+
+        return if(check){
+            val numSpaces = fullName.filter { it == ' ' }
+            return numSpaces.length <= 4
+        } else{
+            false
+        }
     }
 
     fun checkUserName(userName : String) : Boolean{
 
-        val pattern = Regex("^[A-Za-z0-9._]$")
+        val pattern = Regex("[a-zA-Z0-9._-]{4,}")
         return check(pattern, userName, R.string.userNameIncorrectValue)
     }
 
     fun checkEmail(email : String) : Boolean{
-        val pattern = Regex("^([\\w.-]+)@([\\w]+)\\.([a-z]{2,})$")
+        val pattern = Regex("^([\\w._]+)@([\\w]+)\\.([a-z]{2,})$")
         return check(pattern, email, R.string.emailIncorrectValue)
     }
 
