@@ -19,11 +19,11 @@ class Comprobations(private val message: Message) {
 
         if(!visible)
             if(llstEmptyValues.isNotEmpty()) {
-                returnEmptyValue(R.string.emptyValues)
+                return returnEmptyValue(R.string.emptyValues)
             }
         else
             if(llstEmptyValues.size > numEmptyValue) {
-                returnEmptyValue(R.string.emptyValues)
+                return returnEmptyValue(R.string.emptyValues)
             }
 
         return true
@@ -58,22 +58,22 @@ class Comprobations(private val message: Message) {
         return check(pattern, email, R.string.emailIncorrectValue)
     }
 
-    fun checkIntValue(value : String, @StringRes messageText : Int) : Boolean{
+    fun checkIntValue(value : String, @StringRes messageText : Int, test : Boolean = false) : Boolean{
         return try{
             value.toInt()
             true
         } catch(e : Exception){
-            Log.e("Error", "Error al parsar de string a int")
+            if(!test) Log.e("Error", "Error al parsar de string a int")
             returnEmptyValue(messageText)
         }
     }
 
-    fun checkDoubleValue(value : String, @StringRes messageText: Int) : Boolean{
+    fun checkDoubleValue(value : String, @StringRes messageText: Int, test : Boolean = false) : Boolean{
         return try{
             value.toDouble()
             true
         } catch(e : Exception){
-            Log.e("Error", "Error al parsar de string a double")
+            if(!test) Log.e("Error", "Error al parsar de string a double")
             returnEmptyValue(messageText)
         }
     }
