@@ -21,9 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.aresgymjetpackcompose.StartBackground
-import com.example.aresgymjetpackcompose.textButtonBack
-import com.example.aresgymjetpackcompose.titleLarge
+import com.example.aresgymjetpackcompose.Utils.StartBackground
+import com.example.aresgymjetpackcompose.Utils.textButtonBack
+import com.example.aresgymjetpackcompose.Utils.titleLarge
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,12 +33,13 @@ import androidx.compose.ui.unit.dp
 import com.example.aresgymjetpackcompose.API.CRUDAPI
 import com.example.aresgymjetpackcompose.Classes.*
 import com.example.aresgymjetpackcompose.R
-import com.example.aresgymjetpackcompose.TextField
+import com.example.aresgymjetpackcompose.Utils.TextField
 import com.example.aresgymjetpackcompose.Utils.Comprobations
 import com.example.aresgymjetpackcompose.Utils.Encryption
+import com.example.aresgymjetpackcompose.Utils.GlobalVariables.Companion.KeyBoardType
+import com.example.aresgymjetpackcompose.Utils.btnBlue
+import com.example.aresgymjetpackcompose.Utils.text
 import com.example.aresgymjetpackcompose.Utils.GlobalVariables
-import com.example.aresgymjetpackcompose.btnBlue
-import com.example.aresgymjetpackcompose.text
 
 class RegisterActivity : ComponentActivity() {
 
@@ -88,7 +89,13 @@ class RegisterActivity : ComponentActivity() {
 
             for(i in 0 until numTextFields - 1){
                 text(title = llstTxt[i])
-                TextField(llstTextField[i])
+                TextField(llstTextField[i],
+                    when(llstTxt[i]){
+                        getString(R.string.age) -> KeyBoardType.Integer
+                        getString(R.string.weight) -> KeyBoardType.Decimal
+                        else -> KeyBoardType.String
+                    }
+                    )
             }
 
             Row(modifier = Modifier
@@ -109,7 +116,7 @@ class RegisterActivity : ComponentActivity() {
 
             if(checked.value){
                 text(title = llstTxt[llstTxt.size - 1])
-                TextField(llstTextField.last())
+                TextField(llstTextField.last(), KeyBoardType.String)
             }
 
             btnBlue(title = "Registrar-se", onClick = { register() }, modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
@@ -235,8 +242,5 @@ class RegisterActivity : ComponentActivity() {
 
 }
 
-fun returnSplashScreen(context : Context){
-    val intent = Intent(context, MainActivity::class.java)
-    context.startActivity(intent)
-}
+
 

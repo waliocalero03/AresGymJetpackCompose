@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,9 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -28,108 +25,104 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.aresgymjetpackcompose.R
-import com.example.aresgymjetpackcompose.StartBackground
-import com.example.aresgymjetpackcompose.btnBlue
+import com.example.aresgymjetpackcompose.Utils.StartBackground
+import com.example.aresgymjetpackcompose.Utils.btnBlue
+import com.example.aresgymjetpackcompose.Utils.textButton
 import com.example.aresgymjetpackcompose.theme.Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            pantallaInicial(this@MainActivity)
+            pantallaInicial()
         }
     }
-}
 
+    /**
+     * Composable method where contains the layout.
+     */
+    @OptIn(ExperimentalUnitApi::class)
+    @Composable
+    @Preview
+    fun pantallaInicial(){
 
-@Preview
-@Composable
-fun previewSplashScreen(){
-    pantallaInicial()
-}
+        Theme{
 
-@OptIn(ExperimentalUnitApi::class)
-@Composable
-fun pantallaInicial(context : Context? = null){
+            ConstraintLayout(modifier = Modifier.fillMaxSize()) {
 
-    Theme{
+                val (btnIniciarSession, btnRegistrarse, column) = createRefs()
 
-        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                StartBackground()
 
-            val (btnIniciarSession, btnRegistrarse, column) = createRefs()
+                Column(modifier = Modifier.constrainAs(column){
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                ){
+                    Text(text = "BENVINGUT A ARES GYM", style = TextStyle(
+                        textAlign = TextAlign.Center,
+                        fontSize = TextUnit(40f, TextUnitType.Sp),
+                    ),
+                        color = colorResource(id = R.color.white),
+                        fontFamily = FontFamily(Font(R.font.bebasneue_regular)),
+                        modifier = Modifier.fillMaxWidth())
 
-            StartBackground()
+                    Text(text = "Aquí comença el teu progrés d'entrenament.",
+                        style = TextStyle(
+                            textAlign = TextAlign.Center,
+                            fontSize = TextUnit(20f, TextUnitType.Sp),
+                            fontFamily = FontFamily(Font(R.font.sourcesanspro_lightitalic)),
+                        ), color = colorResource(id = R.color.gray_light),
+                        modifier = Modifier.fillMaxWidth())
 
-            Column(modifier = Modifier.constrainAs(column){
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
-            ){
-                Text(text = "BENVINGUT A ARES GYM", style = TextStyle(
-                    textAlign = TextAlign.Center,
-                    fontSize = TextUnit(40f, TextUnitType.Sp),
-                ),
-                    color = colorResource(id = R.color.white),
-                    fontFamily = FontFamily(Font(R.font.bebasneue_regular)),
-                    modifier = Modifier.fillMaxWidth())
+                }
 
-                Text(text = "Aquí comença el teu progrés d'entrenament.",
-                style = TextStyle(
-                    textAlign = TextAlign.Center,
-                    fontSize = TextUnit(20f, TextUnitType.Sp),
-                    fontFamily = FontFamily(Font(R.font.sourcesanspro_lightitalic)),
-                ), color = colorResource(id = R.color.gray_light),
-                    modifier = Modifier.fillMaxWidth())
+                btnBlue(title = "Registrar-se", onClick = { openRegisterActivity() },
+                    modifier = Modifier.constrainAs(btnRegistrarse){
+                        bottom.linkTo(parent.bottom, 16.dp)
+                    })
 
-            }
-
-            btnBlue(title = "Registrar-se", onClick = { openRegisterActivity(context!!) },
-                modifier = Modifier.constrainAs(btnRegistrarse){
-                    bottom.linkTo(parent.bottom, 16.dp)
-                })
-
-            Button(onClick = { openSignUpActivity(context!!) },
-                modifier = Modifier
-                    .constrainAs(btnIniciarSession) {
-                        bottom.linkTo(btnRegistrarse.top, margin = 16.dp)
-                    }
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp)
-                , shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                    //containerColor = MaterialTheme.colorScheme.primary
-                    containerColor = colorResource(id = R.color.black_light)
-                )
-            ) {
-                textButton(text = "Iniciar sessión")
+                Button(onClick = { openSignUpActivity() },
+                    modifier = Modifier
+                        .constrainAs(btnIniciarSession) {
+                            bottom.linkTo(btnRegistrarse.top, margin = 16.dp)
+                        }
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp)
+                    , shape = MaterialTheme.shapes.medium,
+                    colors = ButtonDefaults.buttonColors(
+                        //containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = colorResource(id = R.color.black_light)
+                    )
+                ) {
+                    textButton(text = "Iniciar sessión")
+                }
             }
         }
     }
+
+    /**
+     * Method where changes the activity. Activity to RegisterActivity
+     */
+    fun openRegisterActivity(){
+        val intent = Intent(this@MainActivity, RegisterActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
+     * Method where changes the activity. Activity to .(Not implemented)
+     */
+    fun openSignUpActivity(){
+        /*val intent = Intent(context, LoggingActivity::class.java)
+        context.startActivity(intent)*/
+    }
+
+
 }
 
-@OptIn(ExperimentalUnitApi::class)
-@Composable
-fun textButton(text : String){
 
-    Text(text = text.uppercase(), fontFamily = FontFamily(Font(R.font.roboto_light)),
-        //color = MaterialTheme.colorScheme.background
-        color = colorResource(id = R.color.white),
-        fontSize = TextUnit(14f, TextUnitType.Sp)
-    )
 
-}
-
-fun openRegisterActivity(context: Context){
-    val intent = Intent(context, RegisterActivity::class.java)
-    context.startActivity(intent)
-}
-
-fun openSignUpActivity(context: Context){
-    /*val intent = Intent(context, LoggingActivity::class.java)
-    context.startActivity(intent)*/
-}

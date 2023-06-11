@@ -1,4 +1,4 @@
-package com.example.aresgymjetpackcompose
+package com.example.aresgymjetpackcompose.Utils
 
 import android.content.Context
 import android.util.Log
@@ -14,18 +14,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -34,15 +28,12 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.aresgymjetpackcompose.Activities.openRegisterActivity
-import com.example.aresgymjetpackcompose.Activities.returnSplashScreen
-import com.example.aresgymjetpackcompose.Activities.textButton
+import com.example.aresgymjetpackcompose.R
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -71,12 +62,40 @@ fun titleLarge(title : String){
 
 }
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
-fun TextField(value : MutableState<String>){
+fun TextField(value : MutableState<String>, keyBoardType : GlobalVariables.Companion.KeyBoardType){
+
+    val keyboardType = when(keyBoardType){
+        GlobalVariables.Companion.KeyBoardType.Decimal -> {
+            KeyboardType.Decimal
+        }
+        GlobalVariables.Companion.KeyBoardType.Integer ->{
+         KeyboardType.Number
+        }
+        else -> {
+            KeyboardType.Text
+        }
+    }
+
+    Log.i("KeyBoardType", when(keyboardType){
+        KeyboardType.Decimal -> "Decimal"
+        KeyboardType.Number -> "Number"
+        else -> "String"
+    })
+
+    val keyboardOptions = KeyboardOptions(
+        imeAction = ImeAction.Done,
+        keyboardType = keyboardType
+    )
 
     BasicTextField(value = value.value, onValueChange = {
-        value.value = it
+
+        value.value = if(it.contains(",") && keyboardType == KeyboardType.Decimal){
+            it.replace(",", ".")
+        } else{
+            it
+        }
+
         Log.i("TextChange", value.value)},
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp)
@@ -91,10 +110,7 @@ fun TextField(value : MutableState<String>){
             .fillMaxWidth()
             .padding(top = 6.dp, start = 10.dp),
         textStyle = TextStyle(color = colorResource(id = R.color.white)),
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Number
-        )
+        keyboardOptions = keyboardOptions
     )
 
 }
@@ -132,5 +148,17 @@ fun btnBlue(title : String, onClick : () -> Unit, modifier : Modifier){
     ){
         textButton(text = title)
     }
+
+}
+
+@OptIn(ExperimentalUnitApi::class)
+@Composable
+fun textButton(text : String){
+
+    Text(text = text.uppercase(), fontFamily = FontFamily(Font(R.font.roboto_light)),
+        //color = MaterialTheme.colorScheme.background
+        color = colorResource(id = R.color.white),
+        fontSize = TextUnit(14f, TextUnitType.Sp)
+    )
 
 }
