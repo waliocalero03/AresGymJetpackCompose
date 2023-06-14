@@ -1,10 +1,17 @@
 package com.example.aresgymjetpackcompose.API
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
+import coil.request.ImageRequest
+import coil.request.ImageResult
 import com.example.aresgymjetpackcompose.API.Interfaces.*
 import com.example.aresgymjetpackcompose.Classes.*
 import kotlinx.coroutines.runBlocking
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.create
+import java.net.URL
 
 class CRUDAPI() {
 
@@ -51,6 +58,24 @@ class CRUDAPI() {
         }
 
         logs(result, this.coachCodeClass, this.modifyAction)
+    }
+
+    fun returnImage(filename : String) : Bitmap?{
+
+        var result : ResponseBody?
+
+        runBlocking {
+            result = APIConnection.getRetrofit().create(IFileService::class.java)
+                .returnImage(filename)
+                .body()
+        }
+
+        return if(result != null){
+            BitmapFactory.decodeStream(result!!.byteStream())
+        } else{
+            null
+        }
+
     }
 
     private fun logs(result : Int?, classType : String, action : String){

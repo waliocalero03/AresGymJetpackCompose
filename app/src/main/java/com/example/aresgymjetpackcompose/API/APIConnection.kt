@@ -20,7 +20,7 @@ class APIConnection() : CoroutineScope {
 
     companion object{
 
-        private const val urlAPI = ""
+        private const val urlAPI = "https://192.168.1.72:45455/"
         private val logging = HttpLoggingInterceptor()
 
         private fun getClient() : OkHttpClient{

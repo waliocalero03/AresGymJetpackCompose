@@ -14,13 +14,18 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -33,13 +38,17 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import com.example.aresgymjetpackcompose.API.CRUDAPI
 import com.example.aresgymjetpackcompose.R
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun textButtonBack(context : Context){
 
-    TextButton(onClick = { returnSplashScreen(context) }, ){
+    TextButton(onClick = { /*returnSplashScreen(context)*/ }, ){
         Image(painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24), contentDescription = "")
         Text(text = "Enrere", style = TextStyle(
             fontFamily = FontFamily(Font(R.font.oxygen_light)),
@@ -50,7 +59,6 @@ fun textButtonBack(context : Context){
 
 }
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun titleLarge(title : String){
 
@@ -117,9 +125,14 @@ fun TextField(value : MutableState<String>, keyBoardType : GlobalVariables.Compa
 
 @Composable
 fun StartBackground(){
-    Image(painter = painterResource(id = R.drawable.imgprincipal3), contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.FillBounds)
+    if(GlobalVariables.principalImage != null){
+        Image(
+            bitmap = GlobalVariables.principalImage!!,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+    }
 }
 
 @Composable
@@ -151,7 +164,6 @@ fun btnBlue(title : String, onClick : () -> Unit, modifier : Modifier){
 
 }
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun textButton(text : String){
 
@@ -162,3 +174,19 @@ fun textButton(text : String){
     )
 
 }
+
+/*@Composable
+fun TextFieldPassword(value : MutableState<String>){
+
+    OutlinedTextField(value = value.value, 
+        onValueChange = {value.value = it },
+        trailingIcon = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable)
+                )
+            }
+        }
+    )
+
+}*/
