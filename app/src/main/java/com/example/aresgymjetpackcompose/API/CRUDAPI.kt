@@ -94,4 +94,75 @@ class CRUDAPI() {
         }
     }
 
+    fun checkedRepeatedEmail(email : String) : Boolean{
+        return try{
+
+            var result : Boolean? = null
+
+            runBlocking{
+                result = APIConnection.getRetrofit().create(IPersonRepository::class.java)
+                    .checkRepeatedEmail(email)
+                    .body()
+            }
+
+            if(result != null){
+                Log.i("CRUD API. checkedRepeatedEmail", result!!.toString())
+                !result!!
+            } else{
+                false
+            }
+
+        } catch (e : Exception){
+            Log.e("CRUD API. CheckedRepeatedEmail", e.message.toString())
+            false
+        }
+
+    }
+
+    fun checkedUserName(userName : String) : Boolean{
+
+        return try{
+
+            var result : Boolean? = null
+
+            runBlocking {
+                result = APIConnection.getRetrofit().create(IPersonRepository::class.java)
+                    .checkRepeatedUserName(userName)
+                    .body()
+            }
+            
+            if(result != null){
+                !result!!
+            } else{
+                false
+            }
+
+
+        } catch(e : Exception){
+            Log.e("CRUD API. CheckedUserName", e.message.toString())
+            false
+        }
+
+    }
+
+    fun login(username : String, password : String) : Person?{
+
+        var result : Person? = null
+
+        try{
+
+            runBlocking {
+                result = APIConnection.getRetrofit().create(IPersonRepository::class.java)
+                    .login(username, password)
+                    .body()
+            }
+
+        } catch(e : Exception){
+            Log.e("CRUD API. Login", e.message.toString())
+        }
+
+        return result
+
+    }
+
 }

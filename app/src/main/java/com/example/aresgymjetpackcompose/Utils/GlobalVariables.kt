@@ -11,12 +11,6 @@ class GlobalVariables {
         val url = "https://192.168.1.72:45455/aresgym/"
         var principalImage : ImageBitmap? = null
 
-        enum class KeyBoardType{
-            Decimal,
-            Integer,
-            String
-        }
-
     }
 
 }

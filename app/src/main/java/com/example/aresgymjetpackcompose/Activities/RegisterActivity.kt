@@ -29,17 +29,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.aresgymjetpackcompose.API.CRUDAPI
 import com.example.aresgymjetpackcompose.Classes.*
 import com.example.aresgymjetpackcompose.R
-import com.example.aresgymjetpackcompose.Utils.TextField
 import com.example.aresgymjetpackcompose.Utils.Comprobations
 import com.example.aresgymjetpackcompose.Utils.Encryption
-import com.example.aresgymjetpackcompose.Utils.GlobalVariables.Companion.KeyBoardType
-import com.example.aresgymjetpackcompose.Utils.btnBlue
 import com.example.aresgymjetpackcompose.Utils.text
 import com.example.aresgymjetpackcompose.Utils.GlobalVariables
+import com.example.aresgymjetpackcompose.Utils.button
+import com.example.aresgymjetpackcompose.Utils.passwordTextField
+import com.example.aresgymjetpackcompose.Utils.textFieldUpdated
 
 class RegisterActivity : ComponentActivity() {
 
@@ -69,13 +70,19 @@ class RegisterActivity : ComponentActivity() {
     @Preview
     fun registerActivity() {
 
-        val numTextFields = 8
-        llstTextField = remember{ mutableStateListOf<MutableState<String>>()}
+        val labelWeight = getString(R.string.weight)
+        val labelAge = getString(R.string.age)
+        val labelPassword = getString(R.string.password)
+        val labelConfirmPassword = getString(R.string.confirmPassword)
+        llstTextField = remember{ mutableStateListOf()}
         checked = remember { mutableStateOf(false) }
         val llstTxt = resources.getStringArray(R.array.registerArray)
+        var string = remember { mutableStateOf("")}
 
-        repeat(numTextFields){
-            llstTextField.add(mutableStateOf(""))
+        if (llstTextField.isEmpty()){
+            llstTxt.forEach { _ ->
+                llstTextField.add(mutableStateOf(""))
+            }
         }
 
         StartBackground()
@@ -87,16 +94,24 @@ class RegisterActivity : ComponentActivity() {
             textButtonBack(this@RegisterActivity)
             titleLarge(title = getString(R.string.register))
 
-            for(i in 0 until numTextFields - 1){
-                text(title = llstTxt[i])
-                TextField(llstTextField[i],
-                    when(llstTxt[i]){
-                        getString(R.string.age) -> KeyBoardType.Integer
-                        getString(R.string.weight) -> KeyBoardType.Decimal
-                        else -> KeyBoardType.String
-                    }
-                    )
+            for(i in 0 until llstTxt.size - 1){
+
+                val keyBoardType = when(llstTxt[i]){
+                    labelWeight ->KeyboardType.Decimal
+                    labelAge -> KeyboardType.Number
+                    labelPassword -> KeyboardType.Password
+                    labelConfirmPassword -> KeyboardType.Password
+                    else -> KeyboardType.Text
+                }
+
+                if(keyBoardType == KeyboardType.Password){
+                    passwordTextField(value = llstTextField[i], labelText = llstTxt[i])
+                } else{
+                    textFieldUpdated(value = llstTextField[i], labelText = llstTxt[i], keyBoardType)
+                }
+
             }
+
 
             Row(modifier = Modifier
                 .fillMaxWidth()
@@ -115,11 +130,13 @@ class RegisterActivity : ComponentActivity() {
             }
 
             if(checked.value){
-                text(title = llstTxt[llstTxt.size - 1])
-                TextField(llstTextField.last(), KeyBoardType.String)
+                textFieldUpdated(string, llstTxt[llstTxt.size - 1], KeyboardType.Text)
             }
 
-            btnBlue(title = "Registrar-se", onClick = { register() }, modifier = Modifier.padding(top = 16.dp, bottom = 16.dp))
+            button(title = "Registrar-se", onClick = {
+                llstTextField[llstTextField.size - 1] = string
+                register() }, modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
+            color = R.color.white, textcolor = R.color.blue)
         }
     }
 
@@ -143,6 +160,7 @@ class RegisterActivity : ComponentActivity() {
     fun checkCorrectValues() : Boolean{
 
         val comprobations = Comprobations(message)
+        val crudapi = CRUDAPI()
         val numEmptyValue = 1
 
         if(!comprobations.checkNotEmptyValuesInList(
@@ -173,9 +191,22 @@ class RegisterActivity : ComponentActivity() {
         if(!comprobations.checkPasswordsEqual(llstTextField[positionPassword].value, llstTextField[positionPassword+1].value))
             return false
 
+        if(!crudapi.checkedRepeatedEmail(llstTextField[positionEmail].value)){
+            message.text = R.string.emailRepeated
+            return false
+        }
+
+        if(!crudapi.checkedUserName(llstTextField[positionUserName].value)){
+            message.text = R.string.usernameRepeated
+            return false
+        }
+
         if(checked.value){
-            if(!checkCoachCode())
+            if(!checkCoachCode()){
+                message.text =
                 return false
+            }
+
         }
 
         return true

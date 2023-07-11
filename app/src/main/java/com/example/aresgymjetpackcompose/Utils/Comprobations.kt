@@ -17,14 +17,15 @@ class Comprobations(private val message: Message) {
             it.isEmpty()
         }
 
-        if(!visible)
+        if(visible){
             if(llstEmptyValues.isNotEmpty()) {
                 return returnEmptyValue(R.string.emptyValues)
             }
-        else
+        } else{
             if(llstEmptyValues.size > numEmptyValue) {
                 return returnEmptyValue(R.string.emptyValues)
             }
+        }
 
         return true
     }

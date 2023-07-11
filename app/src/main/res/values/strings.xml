@@ -21,6 +21,14 @@
     <string name="ageIncorrectValue">Incorrecte valor d\'edat</string>
     <string name="passwordIncorrectValue">La contrasenya ha de contenir un número, una majúscula, una miníscula i un caracter especial. Com a mínim, ha de tenir 8 caràcters i màxim 16 caràcters.</string>
     <string name="passwordsDifferents">Les contrasenyes no són iguals.</string>
+    <string name="emailRepeated">Aquest correu electrònic ja està registrat</string>
+    <string name="usernameRepeated">Aquest nom d\'usuari ja està registrat</string>
+    <string name="coachCodeHasIdPerson">Aquest codi ja està agafat.</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="userNameOrEmailLogin">Nom d\' usuari o el correu electrònic</string>
+    <string name="passwordLogin">Introdueix la contrasenya</string>
+    <string name="personDontExist">Nom d\'usuari o contrasenya incorrecta</string>
+
     <string-array name="registerArray">
         <item>@string/fullName</item>
         <item>@string/username</item>
@@ -31,4 +39,11 @@
         <item>@string/confirmPassword</item>
         <item>@string/coachCode</item>
     </string-array>
+
+    <string-array name="loginArray">
+        <item>@string/username</item>
+        <item>@string/password</item>
+    </string-array>
+
+
 </resources>

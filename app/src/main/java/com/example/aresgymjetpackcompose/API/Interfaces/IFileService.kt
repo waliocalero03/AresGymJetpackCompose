@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface IFileService {
 
-    @GET("aresgym/images")
+    @GET("images")
     suspend fun returnImage(@Query("filename") filename : String) : Response<ResponseBody>
 
 }

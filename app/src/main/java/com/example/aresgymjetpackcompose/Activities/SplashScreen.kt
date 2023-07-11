@@ -27,9 +27,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.aresgymjetpackcompose.R
-import com.example.aresgymjetpackcompose.Utils.StartBackground
-import com.example.aresgymjetpackcompose.Utils.btnBlue
-import com.example.aresgymjetpackcompose.Utils.textButton
+import com.example.aresgymjetpackcompose.Utils.*
 import com.example.aresgymjetpackcompose.theme.Theme
 
 class MainActivity : ComponentActivity() {
@@ -43,7 +41,6 @@ class MainActivity : ComponentActivity() {
     /**
      * Composable method where contains the layout.
      */
-    @OptIn(ExperimentalUnitApi::class)
     @Composable
     @Preview
     fun pantallaInicial(){
@@ -81,26 +78,16 @@ class MainActivity : ComponentActivity() {
 
                 }
 
-                btnBlue(title = "Registrar-se", onClick = { openRegisterActivity() },
+                button(title = "Registrar-se", onClick = { openRegisterActivity() },
                     modifier = Modifier.constrainAs(btnRegistrarse){
                         bottom.linkTo(parent.bottom, 16.dp)
-                    })
+                    }, color = R.color.blue)
 
-                Button(onClick = { openSignUpActivity() },
-                    modifier = Modifier
-                        .constrainAs(btnIniciarSession) {
-                            bottom.linkTo(btnRegistrarse.top, margin = 16.dp)
-                        }
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp)
-                    , shape = MaterialTheme.shapes.medium,
-                    colors = ButtonDefaults.buttonColors(
-                        //containerColor = MaterialTheme.colorScheme.primary
-                        containerColor = colorResource(id = R.color.black_light)
-                    )
-                ) {
-                    textButton(text = "Iniciar sessión")
-                }
+                button(title = "Iniciar sessión", onClick = { openSignUpActivity() }, modifier = Modifier.constrainAs(btnIniciarSession){
+                    bottom.linkTo(btnRegistrarse.top, 16.dp)
+                }, color = R.color.black)
+
+
             }
         }
     }
@@ -114,14 +101,12 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Method where changes the activity. Activity to .(Not implemented)
+     * Method where changes the activity. Activity to LoginActivity
      */
     fun openSignUpActivity(){
-        /*val intent = Intent(context, LoggingActivity::class.java)
-        context.startActivity(intent)*/
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
     }
-
-
 }
 
 
